@@ -3,8 +3,12 @@ import { AppContext } from "../context/AppContext";
 import { useState } from "react";
 const Budget = () => {
   const UPPER_LIMIT = 20000;
-  const { budget, dispatch, remaining, currency } = useContext(AppContext);
+  const { budget, dispatch, expenses, currency } = useContext(AppContext);
   const [budgetVal, setBudgetVal] = useState(budget);
+
+  const totalExpenses = expenses.reduce((total, item) => {
+    return (total += item.cost);
+}, 0);
 
   const handleBudgetSubmit = () => {
     // console.log("Budget: " + budget);
@@ -14,8 +18,8 @@ const Budget = () => {
       setBudgetVal(budget);
       return;
     }
-    if (budgetVal < remaining) {
-      alert("Budget cannot be less than remaining funds £" + remaining);
+    if (budgetVal < totalExpenses) {
+      alert("Budget cannot be less than the spending £" + totalExpenses);
       setBudgetVal(budget);
       return;
     }
