@@ -16,11 +16,18 @@ const CurrencyDropDown = () => {
       {" "}
       Currency:{" "}
       {
+        // styalize it with green background and white text with onhover effect
         <select
           name="Currency"
           id="Currency"
           defaultValue={currency}
           onChange={(event) => changeCurrency(event.target.value)}
+          style={{backgroundColor: 'lightseagreen',
+          color: 'white',
+          borderRadius: '5px',
+          '&:hover': {
+            backgroundColor: 'lightgreen',
+            color: 'black'}}}
         >
           <option value="$">$ Dollar</option>
           <option value="£">£ Pound</option>

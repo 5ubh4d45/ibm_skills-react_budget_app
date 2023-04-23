@@ -38,7 +38,8 @@ const Budget = () => {
         required="required"
         type="number"
         name="budget"
-        style={{ size: "10" }}
+        style={{ size: "10",
+        borderRadius: '5px', }}
         // add a step size of 10 to the input field
         step="10"
         onChange={(e) => setBudgetVal(e.target.value)}
