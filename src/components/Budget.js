@@ -1,11 +1,49 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useState } from "react";
 const Budget = () => {
-    const { budget } = useContext(AppContext);
-    return (
-        <div className='alert alert-secondary'>
-            <span>Budget: £{budget}</span>
-        </div>
-    );
+  const UPPER_LIMIT = 20000;
+  const { budget, dispatch, remaining, currency } = useContext(AppContext);
+  const [budgetVal, setBudgetVal] = useState(budget);
+
+  const handleBudgetSubmit = () => {
+    // console.log("Budget: " + budget);
+
+    if (budgetVal > UPPER_LIMIT) {
+      alert("Budget cannot be more than £20,000");
+      setBudgetVal(budget);
+      return;
+    }
+    if (budgetVal < remaining) {
+      alert("Budget cannot be less than remaining funds £" + remaining);
+      setBudgetVal(budget);
+      return;
+    }
+
+    dispatch({
+      type: "SET_BUDGET",
+      payload: budgetVal,
+    });
+  };
+  return (
+    <div className="alert alert-secondary">
+        Budget:
+      <span style={{textAlign: "right"}}>
+        {currency}
+      <input
+        required="required"
+        type="number"
+        name="budget"
+        style={{ size: "10" }}
+        // add a step size of 10 to the input field
+        step="10"
+        onChange={(e) => setBudgetVal(e.target.value)}
+        // call handleBudget function when user clicks out of the input field
+        onBlur={handleBudgetSubmit}
+        value={budgetVal}
+        ></input>
+    </span>
+    </div>
+  );
 };
 export default Budget;
